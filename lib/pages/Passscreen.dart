@@ -42,7 +42,7 @@ class Passscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Request Ride"),
+        title: Text("Awailable Rides"),
       ),
       body: new Container(
           child: StreamBuilder(
@@ -52,53 +52,139 @@ class Passscreen extends StatelessWidget {
                   return Center(
                     child: Text("loading..."),
                   );
-                } else {
+                } 
+                else if(snapshot.data.documents.length==0)
+                {
+                    return Center(child:Text("Sorry, No Rides Found.",style:TextStyle(fontSize: 20,color: Colors.red,fontWeight: FontWeight.bold),));
+                }else {
                   return ListView.builder(
 //                     padding: const EdgeInsets.all(8),
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (_, index) {
                         return Container(
-                            child: Card(
-                                child: InkWell(
-                          onTap: () {
-                            //
-                          },
-                          child: Column(
-                            // mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              // Text(snapshot.data[index].data["source"]),
-                              // (snapshot.data[index].data["source"].toString()==v1)? show(index):null,
-                              //if(snapshot.data[index].data["sourece"].toString()==v1)
+                           
+                           child:Card(
+                            margin: EdgeInsets.fromLTRB(2, 2, 2, 2),
+                            color: Colors.blue[150],
+                            elevation: 5,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Column(),
+                                    Column(),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(
+                                          'Source:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Destination:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'ArrivalTime:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'DepartureTime:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Date:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Spots Requested:',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["source"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["destination"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["Arrivaltime"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["departuretime"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["date"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          snapshot.data.documents[index]
+                                              .data["spot"]
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(),
+                                    Column(),
+                                  ],
+                                ),
 
-                              Text('Source:' +
-                                  snapshot.data.documents[index].data[
-                                      "source"]), // height: 50,                         color: Colors.amber[colorCodes[index]],
-                              Text(snapshot
-                                  .data.documents[index].data["destination"]),
-                              Text(snapshot
-                                  .data.documents[index].data["Arrivaltime"]),
-                              Text(snapshot
-                                  .data.documents[index].data["departuretime"]),
-                              Text(snapshot.data.documents[index].data["date"]),
-                              Text(snapshot.data.documents[index].data["spot"].toString()),
-                              //Text("vss"+v4),
+                                // height: 50,                         color: Colors.amber[colorCodes[index]],
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    RaisedButton(
 
-                              // v6=Text('Source:'+snapshot.data.documents[index].data["source"]).toString();
 
-                              /* Text(snapshot.data[index].data["source"]), // height: 50,                         color: Colors.amber[colorCodes[index]],
-                                  Text(snapshot.data[index].data["destination"]),
-                                   Text(snapshot.data[index].data["Arrivaltime"]),
-                                    Text(snapshot.data[index].data["departuretime"]),
-                                     Text(snapshot.data[index].data["date"]),
-                                      Text(snapshot.data[index].data["spot"]),*/
-                              // Text(snapshot.data[index].data["number"]),
-
-                              ButtonBar(
-                                children: <Widget>[
-                                  RaisedButton(
-                                    child: const Text('Book A Ride'),
+                                      child: const Text('Book A Ride',
+                                          style:
+                                              TextStyle(color: Colors.white)),
                                     onPressed: () {
-                                      Navigator.push(
+                                      
+                                         Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => new Example3(
@@ -108,20 +194,28 @@ class Passscreen extends StatelessWidget {
                                                     .data["rideid"]
                                                     .toString(),v7:v4)),
                                       );
-                                      //print('ret data is $retData');
+                                    
+                                
                                     },
-                                  ),
-                                ],
-                              ),
 
-                              //             },
-                              //         ),
-                              //     ],
-                              // alignment: MainAxisAlignment.center,
-                              //mainAxisSize: MainAxisSize.max),
-                            ],
+
+                                      
+                                      
+                                      color: Colors.black,
+                                      highlightElevation: 1,
+                                      elevation: 8,
+                                    ),
+                                
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
                           ),
-                        )));
+
+                            
+                        );
+                        
                       });
                 }
               })),

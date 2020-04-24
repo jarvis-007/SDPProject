@@ -10,7 +10,7 @@ class LoginSignupPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
 }
-//hello 
+
 class _LoginSignupPageState extends State<LoginSignupPage> {
   final _formKey = new GlobalKey<FormState>();
 
@@ -92,7 +92,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Flutter login demo'),
+          title: new Text(''),
         ),
         body: Stack(
           children: <Widget>[
@@ -143,8 +143,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           child: new ListView(
             shrinkWrap: true,
             children: <Widget>[
+              
               showLogo(),
+              if(_isLoginForm==true) showl(),
+              if(_isLoginForm==false) showsit(),
               if(_isLoginForm==false) showmobilenoInput(),
+              
               showEmailInput(),
               showPasswordInput(),
               showPrimaryButton(),
@@ -154,6 +158,33 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           ),
         ));
   }
+
+  Widget showl() {
+   
+      return new Text(
+        "Login",
+        style: TextStyle(
+            fontSize:30.0,
+            color: Colors.black,
+            height: 1.0,
+            fontWeight: FontWeight.bold),textAlign: TextAlign.center,
+      );
+    
+  }
+
+  Widget showsit() {
+   
+      return new Text(
+        "Sign Up",
+        style: TextStyle(
+            fontSize:30.0,
+            color: Colors.black,
+            height: 1.0,
+            fontWeight: FontWeight.bold),textAlign: TextAlign.center,
+      );
+    
+  }
+
 
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
@@ -197,7 +228,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             hintText: 'Email',
             icon: new Icon(
               Icons.mail,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value.trim(),
@@ -216,7 +247,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             hintText: 'Mobile No',
             icon: new Icon(
               Icons.contact_phone,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Mobile no can\'t be empty' : null,
         onSaved: (value) => _mobileno = value.trim(),
@@ -235,7 +266,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             hintText: 'Password',
             icon: new Icon(
               Icons.lock,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value.trim(),
@@ -259,8 +290,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           child: new RaisedButton(
             elevation: 5.0,
             shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.blue,
+                borderRadius: new BorderRadius.circular(5.0)),
+            color: Colors.black,
             child: new Text(_isLoginForm ? 'Login' : 'Create account',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: validateAndSubmit,

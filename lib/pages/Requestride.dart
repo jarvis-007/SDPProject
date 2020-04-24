@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:demo_flutter2/pages/Message1.dart';
+//import 'package:demo_flutter2/pages/ridereqsucmsg.dart';
+import 'package:demo_flutter2/pages/ridereqsucmsg.dart';
 //import 'package:demo_flutter2/pages/Search.dart';
 //import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 //import 'package:demo_flutter2/service/authentication.dart';
-//import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/firebase_database.dart';
 //import 'package:demo_flutter2/models/todo.dart';
-import 'dart:async';
+//import 'dart:async';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:demo_flutter2/pages/Message1.dart';
-
+//import 'package:demo_flutter2/pages/Message1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 /*class MystatefulWidget extends StatefulWidget
 {
   MystatefulWidget({Key key}):super(key:key);
@@ -36,6 +37,7 @@ class Example3 extends StatefulWidget {
 class Requestride extends State<Example3> {
 //var x=({this.v6});
 Text x;
+ final GlobalKey<FormState> formkey = new GlobalKey<FormState>();
 Text x1;
 var reqid=new DateTime.now().microsecondsSinceEpoch;
 String _time = "PickUp Time";
@@ -45,14 +47,16 @@ TextEditingController _tx1 = new TextEditingController();
   TextEditingController _tx4 = new TextEditingController();
    String _ch='Male';
   int selectRadio;
- 
+ String uid;
  int g=1;
   //TextEditingController _tx1 = new TextEditingController();
    Widget build(BuildContext context) {
-     
+     FirebaseAuth.instance.currentUser().then((user) {
+      uid = user.uid;
+    });
      return Scaffold(
       appBar: AppBar(
-        title: Text("Request Ride"),
+        title: Text("Request  Ride"),
       ),
       body: new Container(
         padding: EdgeInsets.all(16.0),
@@ -67,22 +71,31 @@ TextEditingController _tx1 = new TextEditingController();
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                    // new Text("${widget.v6}"),
-                     x=Text("${widget.v6}"), x1=Text("${widget.v7}"),
+                     x=Text("${widget.v6}",style: TextStyle(color: Colors.transparent),), x1=Text("${widget.v7}",style: TextStyle(color: Colors.transparent),),
                     new Padding(
                         padding: EdgeInsets.only(top: 0.0, bottom: 0.0)),
                     new Container(
                       height: 150.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _tx1,
+                         validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter PickUp Address.';
+                          }
+                        },
                         //onsubmit:_onsub,
                         // onChanged: (v) => _tx4.text = v,
                         maxLines: 4,
                         maxLength: 100,
+                       
                         decoration: InputDecoration(
                           labelText: "PickUp Address",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -93,17 +106,27 @@ TextEditingController _tx1 = new TextEditingController();
                         padding: EdgeInsets.only(top: 0.0, bottom: 0.0)),
                     new Container(
                       height: 150.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _tx2,
+                          validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter Dropping Address.';
+                          }
+                        },
                         //onsubmit:_onsub,
                         // onChanged: (v) => _tx4.text = v,
                         maxLines: 4,
                         maxLength: 100,
+                      
+                        
                         decoration: InputDecoration(
                           labelText: "Dropping Address",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -146,12 +169,12 @@ TextEditingController _tx1 = new TextEditingController();
                                       Icon(
                                         Icons.access_time,
                                         size: 18.0,
-                                        color: Colors.teal,
+                                        color: Colors.black,
                                       ),
                                       Text(
                                         " $_time",
                                         style: TextStyle(
-                                            color: Colors.teal,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18.0),
                                       ),
@@ -163,28 +186,37 @@ TextEditingController _tx1 = new TextEditingController();
                             Text(
                               "  Change",
                               style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0),
                             ),
                           ],
                         ),
                       ),
-                      color: Colors.white,
+                       color: Colors.blue[100],
                     ),
 
                      new Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 0.0)),
                     new Container(
                       height: 60.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _tx3,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter your name.';
+                          }
+                        },
                         maxLength: 100,
+                        
                         decoration: InputDecoration(
                           labelText: " Name",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -196,14 +228,23 @@ TextEditingController _tx1 = new TextEditingController();
                       
                     new Container(
                       height: 60.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _tx4,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter your Age.';
+                          }
+                        },
                         maxLength: 100,
+                        
                         decoration: InputDecoration(
                           labelText: "Age",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -243,24 +284,6 @@ TextEditingController _tx1 = new TextEditingController();
                           ),
                       ]
                       
-
-                   
-                     /*new Container(
-                      //height: 60.0,
-                      child: RadioListTile<Gender>(
-                        title: const Text('Female'),
-                        value: Gender.Female,
-                        groupValue: _ch,
-                         onChanged: (Gender value){
-                           setState(() {
-                             _ch=value;
-                           });
-                         },
-                        
-                      ),
-
-                      
-                    ),*/
                     ),
 
                     
@@ -275,7 +298,10 @@ TextEditingController _tx1 = new TextEditingController();
                       //padding: EdgeInsets.only(top: 0.0),
                       child: RaisedButton(
                           onPressed: () {
-   print(x1.data);
+                          //   setState(() {
+                            //if(formkey.currentState.validate())
+                            
+   //print(x1.data);
                              Firestore.instance
                                 .collection("bookride")
                                 .document(reqid.toString())
@@ -290,7 +316,7 @@ TextEditingController _tx1 = new TextEditingController();
                               'spot':int.parse(x1.data),
                               'status':'pending',
                               'requestid':reqid.toString(),
-                              
+                              'userId':uid,
                             });
 
 
@@ -300,24 +326,24 @@ TextEditingController _tx1 = new TextEditingController();
                               Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => new Message1()),
+                                  builder: (context) => new RideReqSuc()),
                             );
-                              
-                             
-                             
-
-                 
                             
-                            //print('ret data is $retData');
+                            // });
+                              
                           },
-                          child: new Text('Done',
+                          
+                           child: new Text('Done',
                               style: TextStyle(
                                   fontSize: 20,
-                                  height: 2,
-                                  fontWeight: FontWeight.bold)),
-                          color: Colors.blue,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.bold,color: Colors.white)),
+                          color: Colors.black,
                           shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(20.0))),
+                              borderRadius: new BorderRadius.circular(5.0)),
+                              highlightElevation: 1,
+                                      elevation: 8,
+                      )
                     ),
                   ],
                 ),

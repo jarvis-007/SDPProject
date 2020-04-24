@@ -9,8 +9,9 @@ import 'dart:async';
 //import 'package:demo_flutter2/service/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
-import 'package:demo_flutter2/pages/viewriderequest.dart';
-import 'package:demo_flutter2/pages/HandleRideCancelled.dart';
+//import 'package:demo_flutter2/pages/viewriderequest.dart';
+//import 'package:demo_flutter2/pages/HandleRideCancelled.dart';
+import 'package:demo_flutter2/pages/AcceptedRides.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 //import 'package:demo_flutter2/service/authentication.dart';
@@ -19,12 +20,14 @@ String _userId;
 String myreqid;
 String rideid1;
 
-class viewrideoffer extends StatelessWidget {
+class AcceptedRidesMain extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rides Offered'),
+        title: Text('View Accepted Ride Request'),
       ),
       body: new Container(
           child: StreamBuilder(
@@ -34,18 +37,18 @@ class viewrideoffer extends StatelessWidget {
                   return Center(
                     child: Text("loading..."),
                   );
-                }
+                } 
                 else if(snapshot.data.documents.length==0)
                 {
                     return Center(child:Text("Sorry, No Rides Found.",style:TextStyle(fontSize: 20,color: Colors.red,fontWeight: FontWeight.bold),));
-                } 
-                else {
+                }else {
                   return ListView.builder(
 //                     padding: const EdgeInsets.all(8),
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (_, index) {
                         return Container(
                           
+
                           child:
                               // mainAxisSize: MainAxisSize.min,
                               Card(
@@ -98,7 +101,7 @@ class viewrideoffer extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Spots Offered:',
+                                          'Spots Remaining:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
@@ -162,64 +165,82 @@ class viewrideoffer extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     RaisedButton(
-                                      child: const Text('View ride Request',
-                                          style:
+
+                                      child: const Text('View Accepted ride Requests',style:
                                               TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        //print('ret data is $retData');
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  new viewrideRequest(
-                                                    v6: snapshot
-                                                        .data
-                                                        .documents[index]
-                                                        .data["rideid"]
-                                                        .toString(),
-                                                    ioffspot: snapshot
-                                                        .data
-                                                        .documents[index]
-                                                        .data["spot"],
-                                                  )),
-                                        );
-                                      },
+                                    onPressed: () {
+                                      //print('ret data is $retData');
+                                       Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => new AcceptedRides(
+                                                v6: snapshot
+                                                    .data
+                                                    .documents[index]
+                                                    .data["rideid"]
+                                                    .toString(),
+                                              ioffspot:snapshot
+                                                    .data
+                                                    .documents[index]
+                                                    .data["spot"]
+                                                    ,
+                                                    )),
+                                      );
+                                    },
+
+
+                                      
                                       color: Colors.black,
                                       highlightElevation: 1,
                                       elevation: 8,
                                     ),
-                                    RaisedButton(
-                                      child: const Text(
-                                        'Cancle Ride',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        //print('ret data is $retData');
-                                        rideid1 = snapshot.data.documents[index]
-                                            .data["rideid"];
-                                        print("rideid");
-                                        print(rideid1);
-                                        //Firestore.instance.collection('bookride').document(myreqid).updateData({'status':'Ride Cancelled'});
-                                        Firestore.instance.collection('offerride').document(rideid1).delete();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    new HandleRideCancelled(
-                                                        rideid: rideid1)));
-                                      },
-                                      color: Colors.black,
-                                      highlightElevation: 1,
-                                      elevation: 8,
-                                    ),
+                                    
                                   ],
                                 ),
                                 SizedBox(height: 10),
                               ],
                             ),
                           ),
-                        );
-                      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+                            
+
+                       
+                        
+                             );
+
+                          
+                      }
+                      );
                 }
               })),
     );
@@ -238,7 +259,7 @@ class viewrideoffer extends StatelessWidget {
         .where('userid', isEqualTo: _userId)
         .snapshots();
     //Stream<QuerySnapshot> qn1 =   firestore.collection('offerride').where(field).snapshots();
-
+        
     // QuerySnapshot qn1=qn.isBroadcast();
     return qn;
   }

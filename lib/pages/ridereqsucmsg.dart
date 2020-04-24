@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 
 
 
-class Message1 extends StatelessWidget {
-Message1({this.v9});
+class RideReqSuc extends StatelessWidget {
+RideReqSuc({this.v9});
 String v9;
  @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ String v9;
       appBar: AppBar(
         title: Text("Confirmation"),
       ),
-      body:Center(child:Text("Ride Added Successfully.",style:TextStyle(fontSize: 20,color: Colors.green,fontWeight: FontWeight.bold),)),
+      body:Center(child:Text("Ride Request Has Been Sent Successfully.",style:TextStyle(fontSize: 20,color: Colors.green,fontWeight: FontWeight.bold),)),
       );
         
      

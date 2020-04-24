@@ -1,33 +1,60 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:demo_flutter2/pages/Message1.dart';
 //import 'package:demo_flutter2/pages/Search.dart';
 //import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 //import 'package:demo_flutter2/service/authentication.dart';
-//import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/firebase_database.dart';
 //import 'package:demo_flutter2/models/todo.dart';
 import 'dart:async';
-//import 'package:demo_flutter2/service/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-import 'package:demo_flutter2/pages/viewriderequest.dart';
-import 'package:demo_flutter2/pages/HandleRideCancelled.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+//import 'package:demo_flutter2/pages/Message.dart';
+//import 'package:demo_flutter2/pages/LimitExeeded.dart';
 
-//import 'package:demo_flutter2/service/authentication.dart';
 
-String _userId;
-String myreqid;
-String rideid1;
 
-class viewrideoffer extends StatelessWidget {
+class AcceptedRides extends StatelessWidget {
+  AcceptedRides({this.v6,this.ioffspot});
+  
+  String v1;
+  String v6;
+   String v7;
+  String v4;
+  //String v9;
+  var y1;
+  //bool ans;
+  int ans;
+  Text offspot;
+  int ioffspot;
+  int bookspot;
+  int finalans;
+  String myrequestid;
+//Message ans1=new Message();
+                             /* var firebase;
+          var db = firebase.firestore();
+      db.collection('offerride')
+   .where('rideid',isEqualTo:v6)
+   .update({
+     'spot': '666',
+   });*/
+
+QuerySnapshot qn1;
+
+
+DataSnapshot map;
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rides Offered'),
+        title: Text("Accepted Ride Request"),
       ),
-      body: new Container(
-          child: StreamBuilder(
+      body:
+      Column(children: <Widget>[
+Expanded(
+ child: Container(
+          child:StreamBuilder(
               stream: getAllCourses(),
               builder: (_, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -37,18 +64,16 @@ class viewrideoffer extends StatelessWidget {
                 }
                 else if(snapshot.data.documents.length==0)
                 {
-                    return Center(child:Text("Sorry, No Rides Found.",style:TextStyle(fontSize: 20,color: Colors.red,fontWeight: FontWeight.bold),));
-                } 
-                else {
+                    return Center(child:Text("Sorry, No Accepted Requests Found.",style:TextStyle(fontSize: 20,color: Colors.red,fontWeight: FontWeight.bold),));
+                } else {
                   return ListView.builder(
-//                     padding: const EdgeInsets.all(8),
-                      itemCount: snapshot.data.documents.length,
+      itemCount: snapshot.data.documents.length,
                       itemBuilder: (_, index) {
+                        //bookspot=snapshot.data.documents[index].data["spot"];
+                        //myrequestid=snapshot.data.documents[index].data["spot"];
                         return Container(
-                          
-                          child:
-                              // mainAxisSize: MainAxisSize.min,
-                              Card(
+                            child: Card(
+
                             margin: EdgeInsets.fromLTRB(2, 2, 2, 2),
                             color: Colors.blue[150],
                             elevation: 5,
@@ -68,37 +93,37 @@ class viewrideoffer extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
-                                          'Source:',
+                                          'Name:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Destination:',
+                                          'Gender:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Arrival Time:',
+                                          'Pick Up Address:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Departure Time:',
+                                          'Drop Address:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Date:',
+                                          'Pick Up Time:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          'Spots Offered:',
+                                          'Spots Requested:',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
@@ -113,31 +138,31 @@ class viewrideoffer extends StatelessWidget {
                                       children: <Widget>[
                                         Text(
                                           snapshot.data.documents[index]
-                                              .data["source"],
+                                              .data["name"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           snapshot.data.documents[index]
-                                              .data["destination"],
+                                              .data["gender"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           snapshot.data.documents[index]
-                                              .data["Arrivaltime"],
+                                              .data["pickupaddress"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           snapshot.data.documents[index]
-                                              .data["departuretime"],
+                                              .data["dropaddress"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           snapshot.data.documents[index]
-                                              .data["date"],
+                                              .data["pickuptime"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -154,92 +179,44 @@ class viewrideoffer extends StatelessWidget {
                                     Column(),
                                   ],
                                 ),
-
-                                // height: 50,                         color: Colors.amber[colorCodes[index]],
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    RaisedButton(
-                                      child: const Text('View ride Request',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        //print('ret data is $retData');
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  new viewrideRequest(
-                                                    v6: snapshot
-                                                        .data
-                                                        .documents[index]
-                                                        .data["rideid"]
-                                                        .toString(),
-                                                    ioffspot: snapshot
-                                                        .data
-                                                        .documents[index]
-                                                        .data["spot"],
-                                                  )),
-                                        );
-                                      },
-                                      color: Colors.black,
-                                      highlightElevation: 1,
-                                      elevation: 8,
-                                    ),
-                                    RaisedButton(
-                                      child: const Text(
-                                        'Cancle Ride',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        //print('ret data is $retData');
-                                        rideid1 = snapshot.data.documents[index]
-                                            .data["rideid"];
-                                        print("rideid");
-                                        print(rideid1);
-                                        //Firestore.instance.collection('bookride').document(myreqid).updateData({'status':'Ride Cancelled'});
-                                        Firestore.instance.collection('offerride').document(rideid1).delete();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    new HandleRideCancelled(
-                                                        rideid: rideid1)));
-                                      },
-                                      color: Colors.black,
-                                      highlightElevation: 1,
-                                      elevation: 8,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                              ],
+                             ],
                             ),
-                          ),
-                        );
+                        ));
                       });
                 }
-              })),
+              }),
+)),
+              
+             
+
+      ],)
+      
+      
     );
+    
+  }
+  Stream<QuerySnapshot> getAllCourses() {
+    var firestore = Firestore.instance;
+    Stream<QuerySnapshot> qn = firestore
+        .collection('bookride')
+        .where('rideid', isEqualTo: v6).where('status', isEqualTo: 'accepted')
+        .snapshots();
+  return qn;
   }
 
-  Stream<QuerySnapshot> getAllCourses() {
-    FirebaseAuth.instance.currentUser().then((user) {
-      _userId = user.uid;
-      //print(_userId);
-    });
-    // print(_userId);
+  Stream<QuerySnapshot> getAllOffers()
+   {
     var firestore = Firestore.instance;
-    //var firestore1 =firestore.collection('offerride').where('source',isEqualTo:v1).snapshots();
     Stream<QuerySnapshot> qn = firestore
         .collection('offerride')
-        .where('userid', isEqualTo: _userId)
+        .where('rideid', isEqualTo: v6)
         .snapshots();
-    //Stream<QuerySnapshot> qn1 =   firestore.collection('offerride').where(field).snapshots();
-
-    // QuerySnapshot qn1=qn.isBroadcast();
     return qn;
   }
+/*void myofer(QuerySnapshot snapshot)
+{
+  snapshot.documents.where('spot', isGreaterThanOrEqualTo:5);
 }
+*/
+}
+ 

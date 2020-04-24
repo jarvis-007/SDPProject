@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:demo_flutter2/pages/Message.dart';
+import 'package:demo_flutter2/pages/AcceptedRides.dart';
+import 'package:demo_flutter2/pages/AcceptedRidesMain.dart';
+//import 'package:demo_flutter2/pages/Message.dart';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
+//import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_flutter2/service/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -11,8 +13,11 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:demo_flutter2/pages/Passscreen.dart';
 import 'package:demo_flutter2/pages/Message1.dart';
 import 'package:demo_flutter2/pages/viewrideoffer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:demo_flutter2/pages/ViewRidesRequested.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'CheckImage.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -21,7 +26,7 @@ class HomePage extends StatefulWidget {
   final BaseAuth auth;
   final VoidCallback logoutCallback;
   final String userId;
-
+//  final BaseAuth auth1=auth;
   @override
   State<StatefulWidget> createState() => new _HomePageState();
 }
@@ -266,7 +271,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Flutter login demo'),
+          title: new Text('Carpooling'),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
@@ -276,25 +281,39 @@ class _HomePageState extends State<HomePage> {
         ),
         body: new Container(
           padding:
-              new EdgeInsets.only(left: 100, right: 10, top: 140, bottom: 20),
+              new EdgeInsets.only(left: 10, right: 10, top: 14, bottom: 20),
+            
           child: new Column(
             children: <Widget>[
+              Image.asset('assets/g.jpg',height: 300,),
+              SizedBox(height:50.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  
               new SizedBox(
                 width: 180,
+                height: 60,
                 child: new RaisedButton(
+                  
+                  //color:Colors.indigo,
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Example()),
                     );
                   },
-                  child: new Text('Offer A Ride',
-                      style: TextStyle(fontSize: 15, height: 2)),
-                  color: Colors.blue,
+                  child: new Text('Offer Rides',
+                      style: TextStyle(fontSize: 15, height: 2,color:Colors.white)),
+                  color: Colors.black,
+                  highlightElevation: 1,
+                  elevation: 8,
+      
                 ),
               ),
               new SizedBox(
                 width: 180,
+                height: 60,
                 child: new RaisedButton(
                   onPressed: () {
                     Navigator.push(
@@ -302,13 +321,24 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(builder: (context) => Example1()),
                     );
                   },
-                  child: new Text('View Available Ride ',
-                      style: TextStyle(fontSize: 15, height: 2)),
-                  color: Colors.blue,
+                  child: new Text('Find Rides',
+                      style: TextStyle(fontSize: 15, height: 2,color: Colors.white),),
+                  color: Colors.black,
+                  highlightElevation: 1,
+                  elevation: 8,
                 ),
               ),
+                ],
+              ),
+              
+              SizedBox(height:50.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+              
               new SizedBox(
                 width: 180,
+                height: 60,
                 child: new RaisedButton(
                   onPressed: () {
                     Navigator.push(
@@ -317,49 +347,62 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => new viewrideoffer()),
                     );
                   },
-                  child: new Text('View A Rides Offered',
-                      style: TextStyle(fontSize: 15, height: 2)),
-                  color: Colors.blue,
+                  child: new Text('Rides Offered',
+                      style: TextStyle(fontSize: 15, height: 2,color:Colors.white)),
+                  color: Colors.black,
+                  highlightElevation: 1,
+                  elevation: 8,
                 ),
               ),
               new SizedBox(
                 width: 185,
+                height: 60,
                 child: new RaisedButton(
-                  onPressed: () {},
-                  child: new Text('View Rides Requested',
-                      style: TextStyle(fontSize: 15, height: 2)),
-                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new ViewRidesRequested()),
+                    );
+                  },
+                  child: new Text('Rides Requested',
+                      style: TextStyle(fontSize: 15, height: 2,color:Colors.white)),
+                  color: Colors.black,
+                  highlightElevation: 1,
+                  elevation: 8,
                 ),
               ),
+                ]),
+                SizedBox(height:50.0),
+                Center(child:new SizedBox(
+                width: 190,
+                height: 60,
+                child: new RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AcceptedRidesMain()),
+                    );
+                  },
+                  child: new Text('Accepted Requests',
+                      style: TextStyle(fontSize: 15, height: 2,color:Colors.white)),
+                  color: Colors.black,
+                  highlightElevation: 1,
+                  elevation: 8,
+                ),
+              ) ,)
+              
             ],
           ),
         ),
-        // showTodoList(),
-
-        /*         new SizedBox(
-                   width: 200.0,
-   height: 100.0,
-  child: new RaisedButton(
-    child: new Text('Blabla blablablablablablabla bla bla bla'),
-    onPressed: (){},
-  ),
-),*/
-
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showAddTodoDialog(context);
-          },
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ));
+        
+        );
   }
 }
 
 class Example extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SecondRoute();
-  //State<StatefulWidget> createState() => _SecondRoute1();
-  //State<StatefulWidget> createState1() => _ExampleState1();
 }
 
 class _SecondRoute extends State<Example> {
@@ -375,6 +418,8 @@ class _SecondRoute extends State<Example> {
   TextEditingController _tx2 = new TextEditingController();
   TextEditingController _tx3 = new TextEditingController();
   TextEditingController _tx4 = new TextEditingController();
+  TextEditingController _tx5 = new TextEditingController();
+  TextEditingController _tx6 = new TextEditingController();
   String _userId;
   final GlobalKey<FormState> formkey = new GlobalKey<FormState>();
   List<String> _source = <String>[
@@ -390,7 +435,7 @@ class _SecondRoute extends State<Example> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Offer Ride"),
       ),
       body: new Container(
         padding: EdgeInsets.all(16.0),
@@ -413,16 +458,22 @@ class _SecondRoute extends State<Example> {
                   //mainAxisAlignment: MainAxisAlignment.center,
 
                   children: <Widget>[
-                    Text(
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                      
+                      Column(children:<Widget>[
+
+                        Text(
                       'Source',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    new Container(
-                      height: 48.0,
-                      width: 200.0,
-                      child: DropdownButton(
-                        //labelText:Text('Source', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  
+                       DropdownButton(
+                      //  labelText:Text('Source', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
 
                         items: _source
                             .map((value) => DropdownMenuItem(
@@ -439,21 +490,24 @@ class _SecondRoute extends State<Example> {
                         },
                         value: selected,
                         isExpanded: false,
-                        hint: Text('Select Source'),
+                        hint: Text('Select Source',style: TextStyle(fontWeight: FontWeight.bold),),
                         //itemHeight: 10.0,
                       ),
-                    ),
-                    Text(
+                    
+                      ]),
+                      
+                      Column(children: <Widget>[
+
+                          Text(
                       'Destination',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
                     ),
-                    new Container(
-                      height: 48.0,
-                      width: 200.0,
-                      child: DropdownButton(
+                     DropdownButton(
+                       style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                       elevation: 10,
                         items: _source
                             .map((value) => DropdownMenuItem(
                                   child: Text(
@@ -469,11 +523,19 @@ class _SecondRoute extends State<Example> {
                         },
                         value: selected1,
                         isExpanded: false,
-                        hint: Text('Select Destination'),
+                        hint: Text('Select Destination',style: TextStyle(fontWeight: FontWeight.bold),),
 
                         //itemHeight: 10.0,
                       ),
-                    ),
+                    
+
+                      ],)
+                    
+                    ],),
+
+                    SizedBox(height:10),  
+                    
+                    
                     /* RaisedButton(
                child: Text('choose date and Time'),
                onPressed: (){
@@ -518,12 +580,12 @@ class _SecondRoute extends State<Example> {
                                       Icon(
                                         Icons.date_range,
                                         size: 18.0,
-                                        color: Colors.teal,
+                                        color: Colors.black,
                                       ),
                                       Text(
                                         " $_date",
                                         style: TextStyle(
-                                            color: Colors.teal,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18.0),
                                       ),
@@ -535,14 +597,14 @@ class _SecondRoute extends State<Example> {
                             Text(
                               "  Change",
                               style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0),
                             ),
                           ],
                         ),
                       ),
-                      color: Colors.white,
+                      color: Colors.blue[100],
                     ),
                     SizedBox(
                       height: 20.0,
@@ -578,12 +640,12 @@ class _SecondRoute extends State<Example> {
                                       Icon(
                                         Icons.access_time,
                                         size: 18.0,
-                                        color: Colors.teal,
+                                        color: Colors.black,
                                       ),
                                       Text(
                                         " $_time",
                                         style: TextStyle(
-                                            color: Colors.teal,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18.0),
                                       ),
@@ -595,14 +657,14 @@ class _SecondRoute extends State<Example> {
                             Text(
                               "  Change",
                               style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0),
                             ),
                           ],
                         ),
                       ),
-                      color: Colors.white,
+                      color: Colors.blue[100],
                     ),
                     SizedBox(
                       height: 20.0,
@@ -624,6 +686,7 @@ class _SecondRoute extends State<Example> {
                         }, currentTime: DateTime.now(), locale: LocaleType.en);
                         setState(() {});
                       },
+                      //color:Colors.lime,
                       child: Container(
                         alignment: Alignment.center,
                         height: 50.0,
@@ -638,12 +701,12 @@ class _SecondRoute extends State<Example> {
                                       Icon(
                                         Icons.access_time,
                                         size: 18.0,
-                                        color: Colors.teal,
+                                        color: Colors.black,
                                       ),
                                       Text(
                                         " $_time1",
                                         style: TextStyle(
-                                            color: Colors.teal,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18.0),
                                       ),
@@ -655,42 +718,74 @@ class _SecondRoute extends State<Example> {
                             Text(
                               "  Change",
                               style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0),
                             ),
                           ],
                         ),
                       ),
-                      color: Colors.white,
+                      color: Colors.blue[100],
                     ),
                     new Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Container(
-                      height: 60.0,
-                      child: TextField(
+                      height: 70.0,
+                      child: TextFormField(
                         controller: _tx1,
-                        maxLength: 100,
+                        maxLength: 5,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter number of free spots in your vehicle.';
+                          }
+                        },
                         decoration: InputDecoration(
-                          labelText: "Free Spote",
-                          fillColor: Colors.white,
+                          labelText: "Free Spots",
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
-                            borderSide: new BorderSide(),
+                            borderRadius: new BorderRadius.circular(5.0),
+                            borderSide: new BorderSide(
+                              color: Colors.red,
+                            ),
+
                           ),
                         ),
+                        
                       ),
                     ),
                     new Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Container(
-                      height: 60.0,
-                      child: TextField(
+                      height: 70.0,
+                      child: TextFormField(
                         controller: _tx2,
-                        maxLength: 100,
+                        maxLength: 10,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter rate per kilometer per head.';
+                          }
+                        },
+                        //keyboardType: TextInputType.phone,
+                        /*validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter number of free spots in your vehicle.';
+                          }
+                          else if(parse(value))
+                          {
+
+                          }
+                        },*/
                         decoration: InputDecoration(
-                          labelText: "Cost Per Km",
-                          fillColor: Colors.white,
+                          labelText: "Rate Per Km",
+                          
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor:  Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -698,15 +793,74 @@ class _SecondRoute extends State<Example> {
                     ),
                     new Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Container(
-                      height: 60.0,
-                      child: TextField(
+                      height: 70.0,
+                      child: TextFormField(
                         controller: _tx3,
-                        maxLength: 100,
+                        maxLength: 15,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter the vehicle number.';
+                          }
+                        },
+                        
+
                         decoration: InputDecoration(
                           labelText: "Vehicle Number",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
+                            borderSide: new BorderSide(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    new Padding(padding: EdgeInsets.only(top: 20.0)),
+                    new Container(
+                      height: 70.0,
+                      child: TextFormField(
+                        controller: _tx5,
+                        maxLength: 20,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter the driver name.';
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Driver Name",
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(5.0),
+                            borderSide: new BorderSide(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    new Padding(padding: EdgeInsets.only(top: 20.0)),
+                    new Container(
+                      height: 70.0,
+                      child: TextFormField(
+                        controller: _tx6,
+                        maxLength: 10,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter the contact number.';
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Contact Number",
+                          //labelStyle: FontWeight.bold,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -715,16 +869,25 @@ class _SecondRoute extends State<Example> {
                     new Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 0.0)),
                     new Container(
-                      height: 190.0,
-                      child: TextField(
+                      height: 160.0,
+                      child: TextFormField(
                         controller: _tx4,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter the vehicle description';
+                          }
+                        },
+                        
                         //onsubmit:_onsub,
                         // onChanged: (v) => _tx4.text = v,
-                        maxLines: 4,
+                        maxLines: 5,
                         maxLength: 100,
                         decoration: InputDecoration(
                           labelText: "Vehicle Description",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,                          
                           border: new OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(10.0),
                             borderSide: new BorderSide(),
@@ -741,9 +904,16 @@ class _SecondRoute extends State<Example> {
                       // margin: EdgeInsets.only(top:0.0),
                       //padding: EdgeInsets.only(top: 0.0),
 
+                    
+
+
+
                       child: RaisedButton(
                           onPressed: () {
-                            Firestore.instance
+                            setState(() {
+                            if(formkey.currentState.validate())
+                            {
+                              Firestore.instance
                                 .collection("offerride")
                                 .document(uid.toString())
                                 .setData({
@@ -758,24 +928,61 @@ class _SecondRoute extends State<Example> {
                               'description': _tx4.text,
                               'rideid': uid.toString(),
                               'userid': _userId,
+                               'driverName': _tx5.text,
+                                'contactNumber': _tx6.text,
                             });
+                            
                             myid++;
 
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => new Message1()),
-                            );
+                            );  
+                            }
+
+                            });
+                            /*Firestore.instance
+                                .collection("offerride")
+                                .document(uid.toString())
+                                .setData({
+                              'source': selected,
+                              'destination': selected1,
+                              'date': _date,
+                              'Arrivaltime': _time,
+                              'departuretime': _time1,
+                              'spot': int.parse(_tx1.text),
+                              'cost': _tx2.text,
+                              'number': _tx3.text,
+                              'description': _tx4.text,
+                              'rideid': uid.toString(),
+                              'userid': _userId,
+                               'driverName': _tx5.text,
+                                'contactNumber': _tx6.text,
+                            });
+                            
+                            myid++;
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new Message1()),
+                            );*/
                           },
                           child: new Text('Done',
                               style: TextStyle(
                                   fontSize: 20,
-                                  height: 2,
-                                  fontWeight: FontWeight.bold)),
-                          color: Colors.blue,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.bold,color: Colors.white)),
+                          color: Colors.black,
                           shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(20.0))),
-                    ),
+                              borderRadius: new BorderRadius.circular(5.0)),
+                              highlightElevation: 1,
+                                      elevation: 8,
+                              ),
+       ),
+                    //new Padding(padding: EdgeInsets.only(top: 10.0, bottom: 30.0))
+                    
                   ],
                 ),
               ],
@@ -814,7 +1021,7 @@ class _Second extends State<Example1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Find Rides"),
       ),
       body: new Container(
         padding: EdgeInsets.all(16.0),
@@ -828,16 +1035,21 @@ class _Second extends State<Example1> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                      
+                      Column(children:<Widget>[
+
+                        Text(
                       'Source',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    new Container(
-                      height: 48.0,
-                      width: 200.0,
-                      child: DropdownButton(
-                        //labelText:Text('Source', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  
+                       DropdownButton(
+                      //  labelText:Text('Source', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
 
                         items: _source
                             .map((value) => DropdownMenuItem(
@@ -854,23 +1066,24 @@ class _Second extends State<Example1> {
                         },
                         value: selected,
                         isExpanded: false,
-                        hint: Text('Select Source'),
+                        hint: Text('Select Source',style: TextStyle(fontWeight: FontWeight.bold),),
                         //itemHeight: 10.0,
                       ),
-                    ),
-                    new Padding(
-                        padding: EdgeInsets.only(top: 10.0, bottom: 0.0)),
-                    Text(
+                    
+                      ]),
+                      
+                      Column(children: <Widget>[
+
+                          Text(
                       'Destination',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
                     ),
-                    new Container(
-                      height: 48.0,
-                      width: 200.0,
-                      child: DropdownButton(
+                     DropdownButton(
+                       style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                       elevation: 10,
                         items: _source
                             .map((value) => DropdownMenuItem(
                                   child: Text(
@@ -886,11 +1099,15 @@ class _Second extends State<Example1> {
                         },
                         value: selected1,
                         isExpanded: false,
-                        hint: Text('Select Destination'),
+                        hint: Text('Select Destination',style: TextStyle(fontWeight: FontWeight.bold),),
 
                         //itemHeight: 10.0,
                       ),
-                    ),
+                    
+
+                      ],)
+                    
+                    ],),
                     new Padding(
                         padding: EdgeInsets.only(top: 10.0, bottom: 0.0)),
                     RaisedButton(
@@ -924,12 +1141,12 @@ class _Second extends State<Example1> {
                                       Icon(
                                         Icons.date_range,
                                         size: 18.0,
-                                        color: Colors.teal,
+                                        color: Colors.black,
                                       ),
                                       Text(
                                         " $_date",
                                         style: TextStyle(
-                                            color: Colors.teal,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18.0),
                                       ),
@@ -941,26 +1158,34 @@ class _Second extends State<Example1> {
                             Text(
                               "  Change",
                               style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0),
                             ),
                           ],
                         ),
                       ),
-                      color: Colors.white,
+                     color: Colors.blue[100],
                     ),
                     new Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Container(
                       height: 60.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _tx5,
                         maxLength: 100,
+                        validator: (String value){
+                          if(value.isEmpty)
+                          {
+                            return 'please enter number of seats you require.';
+                          }
+                        },
                         decoration: InputDecoration(
                           labelText: " No of Seat",
-                          fillColor: Colors.white,
+                          labelStyle:TextStyle(color: Colors.black38),
+                          fillColor: Colors.teal[50],
+                          filled: true,
                           border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(10.0),
+                            borderRadius: new BorderRadius.circular(5.0),
                             borderSide: new BorderSide(),
                           ),
                         ),
@@ -987,14 +1212,17 @@ class _Second extends State<Example1> {
                             );
                             //print('ret data is $retData');
                           },
-                          child: new Text('Done',
+                            child: new Text('Done',
                               style: TextStyle(
                                   fontSize: 20,
-                                  height: 2,
-                                  fontWeight: FontWeight.bold)),
-                          color: Colors.blue,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.bold,color: Colors.white)),
+                          color: Colors.black,
                           shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(20.0))),
+                              borderRadius: new BorderRadius.circular(5.0)),
+                              highlightElevation: 1,
+                                      elevation: 8,
+                    ),
                     ),
                   ],
                 ),
